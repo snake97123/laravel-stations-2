@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PracticeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('practice', function() {
+//     return response('practice');
+// });
+
+// Route::get('practice2', function() {
+//         $test = 'practice2';
+//     return response($test);
+// });
+
+// Route::get('practice3', function() {
+//         $test = app()->version();
+//     return response($test);
+// });
+
+// Station2の内容
+Route::get('practice', [PracticeController::class, 'sample']);
+Route::get('practice2', [PracticeController::class, 'sample2']);
+Route::get('practice3', [PracticeController::class, 'sample3']);
+
+// Station3の内容
+Route::get('/getPractice', [PracticeController::class, 'getPractice']);
