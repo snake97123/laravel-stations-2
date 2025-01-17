@@ -16,6 +16,9 @@ class MovieFactory extends Factory
         return [
             'title' => $this->faker->realText(10),
             'image_url' => $this->faker->imageUrl(),
+            'published_year' => $this->faker->numberBetween(1980, 2026),
+            'is_showing' => $this->faker->boolean(),
+            'description' => $this->faker->realText(100),
         ];
     }
 }

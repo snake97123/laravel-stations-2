@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\AdminMovieController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,3 +44,6 @@ Route::get('/getPractice', [PracticeController::class, 'getPractice']);
 
 // Station6の内容
 Route::get('/movies', [MovieController::class, 'index']);
+
+// Station7の内容
+Route::get('/admin/movies',[AdminMovieController::class, 'index']);
