@@ -47,3 +47,7 @@ Route::get('/movies', [MovieController::class, 'index']);
 
 // Station7の内容
 Route::get('/admin/movies',[AdminMovieController::class, 'index']);
+
+// Station8の内容
+Route::get('/admin/movies/create', [AdminMovieController::class, 'create'])->name('movies.create');
+Route::post('/admin/movies/store', [AdminMovieController::class, 'store'])->name('movies.store');
