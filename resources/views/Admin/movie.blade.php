@@ -30,6 +30,7 @@
                     <td>上映予定</td>
                   @endif
                   <td>{{ $movie->description }}</td>
+                  <td><a href="{{ route('movies.edit', ['id' => $movie->id]) }}">編集</a></td>
                 </tr>
               </tbody>
             @endforeach

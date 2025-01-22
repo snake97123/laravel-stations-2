@@ -27,6 +27,7 @@ class AdminMovieController extends Controller
                 'is_showing' => 'required',
                 'description' => 'required',   
             ]);
+            
 
          try {
             $movie = new Movie();
@@ -41,5 +42,37 @@ class AdminMovieController extends Controller
          } catch (\Exception $e) {
             return redirect()->route('movies.create')->with('error', '映画の作成に失敗しました');
          }
+    }
+
+    public function edit($id)
+    {
+        $movie = Movie::find($id);
+        return view('admin.edit', ['movie' => $movie]);
+    }
+
+    // Requestをつけなかったらエラーになったので原因を調べる。
+    public function update(Request $request) 
+    {
+        $request->validate([
+            'title' => 'required|unique:movies,title',
+            'image_url' => 'required|url',
+            'published_year' => 'required',
+            'is_showing' => 'required',
+            'description' => 'required',   
+        ]);
+
+        try {
+            $movie = Movie::find($request->id);
+            $movie->title = $request->title;
+            $movie->image_url = $request->image_url;
+            $movie->published_year = $request->published_year;
+            $movie->is_showing = $request->is_showing;
+            $movie->description = $request->description;
+            $movie->save();
+
+            return redirect('/admin/movies');
+        } catch (\Exception $e) {
+            return redirect()->route('movies.edit', ['id' => $request->id])->with('error', '映画の更新に失敗しました');
+        }
     }
 }
