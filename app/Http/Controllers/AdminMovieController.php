@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminMovieController extends Controller
 {
@@ -54,7 +55,7 @@ class AdminMovieController extends Controller
     public function update(Request $request) 
     {
         $request->validate([
-            'title' => 'required|unique:movies,title',
+            'title' =>  ['required', Rule::unique('movies')->ignore($request->id)],
             'image_url' => 'required|url',
             'published_year' => 'required',
             'is_showing' => 'required',
@@ -73,6 +74,18 @@ class AdminMovieController extends Controller
             return redirect('/admin/movies');
         } catch (\Exception $e) {
             return redirect()->route('movies.edit', ['id' => $request->id])->with('error', '映画の更新に失敗しました');
+        }
+    }
+
+    public function delete($id)
+    {
+        $movie = Movie::findOrFail($id);
+
+        try {    
+            $movie->delete();
+            return redirect('/admin/movies')->with('success', '映画の削除が完了しました');
+        } catch (\Exception $e) {
+            return redirect('/admin/movies')->with('error', '映画の削除に失敗しました');
         }
     }
 }

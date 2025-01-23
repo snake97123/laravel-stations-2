@@ -4,10 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Movie</title>
-  <h1>一覧表示</h1>
+  <title>Movie</title> 
 </head>
 <body>
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+  <h1>一覧表示</h1>
       <table>
         <thead>
           <tr>
@@ -30,7 +41,14 @@
                     <td>上映予定</td>
                   @endif
                   <td>{{ $movie->description }}</td>
-                  <td><a href="{{ route('movies.edit', ['id' => $movie->id]) }}">編集</a></td>
+                  <td><button onclick="location.href=`{{ route('movies.edit', ['id' => $movie->id]) }}`">編集</button></td>
+                  <td>
+                    <form method="POST" action="{{ route('movies.destroy', ['id' => $movie->id]) }}" onsubmit="return confirm('本当に削除しますか？')">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit">削除</button>
+                    </form>
+                  </td>
                 </tr>
               </tbody>
             @endforeach

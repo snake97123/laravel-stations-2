@@ -46,7 +46,7 @@ Route::get('/getPractice', [PracticeController::class, 'getPractice']);
 Route::get('/movies', [MovieController::class, 'index']);
 
 // Station7の内容
-Route::get('/admin/movies',[AdminMovieController::class, 'index']);
+Route::get('/admin/movies',[AdminMovieController::class, 'index'])->name('movies.index');
 
 // Station8の内容
 Route::get('/admin/movies/create', [AdminMovieController::class, 'create'])->name('movies.create');
@@ -55,3 +55,6 @@ Route::post('/admin/movies/store', [AdminMovieController::class, 'store'])->name
 // Station9の内容
 Route::get('/admin/movies/{id}/edit', [AdminMovieController::class, 'edit'])->name('movies.edit');
 Route::patch('/admin/movies/{id}/update', [AdminMovieController::class, 'update'])->name('movies.update');
+
+// Station10の内容
+Route::delete('/admin/movies/{id}/destroy', [AdminMovieController::class, 'delete'])->name('movies.destroy');
