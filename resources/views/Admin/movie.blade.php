@@ -19,6 +19,8 @@
     </div>
 @endif
   <h1>一覧表示</h1>
+        <button type="submit">新規登録</button>
+      </form>
       <table>
         <thead>
           <tr>
@@ -51,6 +53,7 @@
                   </td>
                 </tr>
               </tbody>
+           </thread>
             @endforeach
       </table>
           

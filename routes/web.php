@@ -43,10 +43,10 @@ Route::get('practice3', [PracticeController::class, 'sample3']);
 Route::get('/getPractice', [PracticeController::class, 'getPractice']);
 
 // Station6の内容
-Route::get('/movies', [MovieController::class, 'index']);
+Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
 
 // Station7の内容
-Route::get('/admin/movies',[AdminMovieController::class, 'index'])->name('movies.index');
+Route::get('/admin/movies',[AdminMovieController::class, 'index']);
 
 // Station8の内容
 Route::get('/admin/movies/create', [AdminMovieController::class, 'create'])->name('movies.create');
