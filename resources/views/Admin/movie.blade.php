@@ -19,8 +19,7 @@
     </div>
 @endif
   <h1>一覧表示</h1>
-        <button type="submit">新規登録</button>
-      </form>
+      <button onclick="location.href=`{{ route('movies.create') }}`">新規作成</button>
       <table>
         <thead>
           <tr>
@@ -29,6 +28,7 @@
             <th scope="col">公開年</th>
             <th scope="col">上映中かどうか</th>
             <th scope="col">概要</th>
+            <th scope="col">ジャンル</th>
           </tr>
         </thead>
            @foreach ($movies as $movie)
@@ -43,6 +43,7 @@
                     <td>上映予定</td>
                   @endif
                   <td>{{ $movie->description }}</td>
+                  <td>{{ $movie->genre }}</td>
                   <td><button onclick="location.href=`{{ route('movies.edit', ['id' => $movie->id]) }}`">編集</button></td>
                   <td>
                     <form method="POST" action="{{ route('movies.destroy', ['id' => $movie->id]) }}" onsubmit="return confirm('本当に削除しますか？')">

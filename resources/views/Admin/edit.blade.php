@@ -46,6 +46,12 @@
             </div>
 
             <div>
+                <label for="genre">ジャンル</label>
+                <input id="genre" type="text"
+                    name="genre" value="{{ $movie->genre->name }}" required>
+            </div>
+
+            <div>
                 <button type="submit">
                     更新
                 </button>

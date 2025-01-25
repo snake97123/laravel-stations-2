@@ -42,6 +42,12 @@
             </div>
 
             <div>
+                <label for="genre">ジャンル</label>
+                <input id="genre" type="text"
+                    name="genre" required>
+            </div>
+
+            <div>
                 <button type="submit">
                     登録を完了する
                 </button>
