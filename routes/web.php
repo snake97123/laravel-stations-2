@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdminMovieController;
-
+use App\Http\Controllers\SheetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,3 +58,6 @@ Route::patch('/admin/movies/{id}/update', [AdminMovieController::class, 'update'
 
 // Station10の内容
 Route::delete('/admin/movies/{id}/destroy', [AdminMovieController::class, 'delete'])->name('movies.destroy');
+
+// Station13の内容
+Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
