@@ -61,3 +61,6 @@ Route::delete('/admin/movies/{id}/destroy', [AdminMovieController::class, 'delet
 
 // Station13の内容
 Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
+
+// Station14の内容
+Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');

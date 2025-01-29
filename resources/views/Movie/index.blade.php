@@ -17,11 +17,11 @@
         <input type="radio" name="is_showing" value="0">公開予定
         <button type="submit">検索</button>
       </form>
-      <form method="GET" action="{{ route('movies.create') }}">
   <ul>
     @foreach ($movies as $movie)
       <li>タイトル：{{ $movie->title }}</li>
       <li>{{ $movie->image_url }}</li>
+      <button onclick="location.href=`{{ route('movies.show', ['id' => $movie->id]) }}`">詳細</button>
     @endforeach
   </ul>
   <div id="pagination">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -25,5 +26,14 @@ class MovieController extends Controller
     
         $movies = $query->paginate(20);
         return view('movie.index', ['movies' => $movies]);
+    }
+
+    public function show($id)
+    {
+        $movie = Movie::join('genres', 'movies.genre_id', '=', 'genres.id')
+            ->select('movies.*', 'genres.name as genre_name')
+            ->findOrFail($id);
+        $schedules = Schedule::where('movie_id', $movie->id)->orderBy('start_time', 'asc')->get();
+        return view('movie.show', ['movie' => $movie, 'schedules' => $schedules]);
     }
 }
