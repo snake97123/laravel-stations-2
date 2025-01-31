@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('movie_id')->constrained()->onDelete('cascade');
-            $table->time('start_time')->comment('上映開始時間');
-            $table->time('end_time')->comment('上映終了時間');
+            $table->datetime('start_time')->comment('上映開始時間');
+            $table->datetime('end_time')->comment('上映終了時間');
             $table->timestamps();
         });
     }

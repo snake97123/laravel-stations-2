@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Genre;
-use Illuminate\Container\Attributes\Log;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -110,5 +110,12 @@ class AdminMovieController extends Controller
         } catch (\Exception $e) {
             return redirect('/admin/movies')->with('error', '映画の削除に失敗しました');
         }
+    }
+
+    public function show($id)
+    {
+        $movie = Movie::with('genre')->find($id);
+        $schedules = Schedule::where('movie_id', $id)->get();
+        return view('admin.show', ['movie' => $movie, 'schedules' => $schedules]);
     }
 }

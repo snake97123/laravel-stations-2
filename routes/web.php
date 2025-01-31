@@ -5,6 +5,8 @@ use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\SheetController;
+use App\Http\Controllers\AdminScheduleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,9 +49,12 @@ Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
 
 // Station7の内容
 Route::get('/admin/movies',[AdminMovieController::class, 'index']);
+Route::get('/admin/movies/create', [AdminMovieController::class, 'create'])->name('movies.create');
+Route::get('/admin/movies/{id}', [AdminMovieController::class, 'show'])->name('movies.show');
+Route::get('/admin/movies/{id}/schedules/create', [AdminScheduleController::class, 'create'])->name('schedules.create');
+Route::post('/admin/movies/{id}/schedules/store', [AdminScheduleController::class, 'store'])->name('schedules.store');
 
 // Station8の内容
-Route::get('/admin/movies/create', [AdminMovieController::class, 'create'])->name('movies.create');
 Route::post('/admin/movies/store', [AdminMovieController::class, 'store'])->name('movies.store');
 
 // Station9の内容
@@ -64,3 +69,11 @@ Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
 
 // Station14の内容
 Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');
+
+// Station15の内容
+Route::get('/admin/schedules', [AdminScheduleController::class, 'index'])->name('schedules.index');
+Route::get('/admin/schedules/{id}', [AdminScheduleController::class, 'show'])->name('schedules.show');
+Route::get('/admin/schedules/{scheduleId}/edit', [AdminScheduleController::class, 'edit'])->name('schedules.edit');
+Route::patch('/admin/schedules/{id}/update', [AdminScheduleController::class, 'update'])->name('schedules.update');
+
+Route::delete('admin/schedules/{scheduleId}/destroy', [AdminScheduleController::class, 'delete'])->name('schedules.destroy');
