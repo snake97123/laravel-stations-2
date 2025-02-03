@@ -30,16 +30,30 @@ class AdminScheduleController extends Controller
     public function store(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'movie_id' => 'required|exists:movies,id',
-            'start_time_date' => 'required|date_format:Y-m-d',
-            'start_time_time' => 'required|date_format:H:i',
-            'end_time_date' => 'required|date_format:Y-m-d',
-            'end_time_time' => 'required|date_format:H:i',
+            'movie_id' => ['required', 'exists:movies,id'],
+            'start_time_date' => ['required', 'date_format:Y-m-d', 'before_or_equal:end_time_date'],
+            'start_time_time' => ['required', 'date_format:H:i', 'before:end_time_time',
+            function ($attribute, $value, $fail) use ($request) {
+                $start_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('start_time_time')));
+                $end_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('end_time_time')));
+                if($start_time->diffInMinutes($end_time) < 6) {
+                    $fail('開始時刻と終了時刻の差は6分以上にしてください');
+                }
+            }],
+            'end_time_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:start_time_date'],
+            'end_time_time' => ['required', 'date_format:H:i', 'after:start_time_time',
+            function ($attribute, $value, $fail) {
+                $start_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('start_time_time')));
+                $end_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('end_time_time')));
+                if($start_time->diffInMinutes($end_time) < 6) {
+                    $fail('開始時刻と終了時刻の差は6分以上にしてください');
+                }
+            }],
         ]);
 
+       
         $start_time = new CarbonImmutable($validatedData['start_time_date'] . ' ' . $validatedData['start_time_time']);
         $end_time = new CarbonImmutable($validatedData['end_time_date'] . ' ' . $validatedData['end_time_time']);
-
 
         $schedule = new Schedule();
         $schedule->movie_id = $id;
@@ -70,11 +84,25 @@ class AdminScheduleController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'movie_id' => 'required|exists:movies,id',
-            'start_time_date' => 'required|date_format:Y-m-d',
-            'start_time_time' => 'required|date_format:H:i',
-            'end_time_date' => 'required|date_format:Y-m-d',
-            'end_time_time' => 'required|date_format:H:i',
+            'movie_id' => ['required', 'exists:movies,id'],
+            'start_time_date' => ['required', 'date_format:Y-m-d', 'before_or_equal:end_time_date'],
+            'start_time_time' => ['required', 'date_format:H:i', 'before:end_time_time',
+            function ($attribute, $value, $fail) {
+                $start_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('start_time_time')));
+                $end_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('end_time_time')));
+                if($start_time->diffInMinutes($end_time) < 6) {
+                    $fail('開始時刻と終了時刻の差は6分以上にしてください');
+                }
+            }],
+            'end_time_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:start_time_date'],
+            'end_time_time' => ['required', 'date_format:H:i', 'after:start_time_time',
+            function ($attribute, $value, $fail) {
+                $start_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('start_time_time')));
+                $end_time = CarbonImmutable::createFromFormat('H:i', str_replace(['時', '分'], [':', ''], request()->input('end_time_time')));
+                if($start_time->diffInMinutes($end_time) < 6) {
+                    $fail('開始時刻と終了時刻の差は6分以上にしてください');
+                }
+            }],
         ]);
 
         $start_time = new CarbonImmutable($validatedData['start_time_date'] . ' ' . $validatedData['start_time_time']);
