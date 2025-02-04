@@ -69,6 +69,9 @@ Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
 
 // Station14の内容
 Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/sheets', [SheetController::class, 'show'])->name('sheets.show');
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/reservations/create', [SheetController::class, 'create'])->name('sheets.create');
+Route::post('/reservations/store', [SheetController::class, 'store'])->name('reservations.store');
 
 // Station15の内容
 Route::get('/admin/schedules', [AdminScheduleController::class, 'index'])->name('schedules.index');

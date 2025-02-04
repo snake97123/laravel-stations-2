@@ -23,6 +23,10 @@
     @foreach ($schedules as $schedule)
         <p>開始時間：{{ $schedule->start_time->format('H:i') }}</p>
         <p>終了時間：{{ $schedule->end_time->format('H:i') }}</p>
+        <button onclick="location.href=`/movies/{{ $movie->id }}/schedules/{{ $schedule->id }}/sheets?date={{ \Carbon\Carbon::now()->format('Y-m-d') }}`">
+        座席を予約する
+        </button>
     @endforeach
+    
 </body>
 </html>
