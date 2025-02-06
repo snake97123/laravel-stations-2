@@ -27,9 +27,15 @@
         <tr>
           @foreach ($rowSheets as $sheet)
             <td>
+              @if(in_array($sheet->id, $reservedSheetIds))
+              <div class="reserved">
+                <span>{{ $sheet->row }}-{{ $sheet->column }}</span>
+                </div>
+              @else
               <a href="/movies/{{ $movie_id }}/schedules/{{ $schedule_id }}/reservations/create?date={{ $date }}&sheetId={{ $sheet->id }}">
                 {{ $sheet->row }}-{{ $sheet->column }}
               </a>
+              @endif
             </td>
           @endforeach
         </tr>
