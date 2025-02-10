@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->comment('上映日');
+            $table->date('date')->nullable()->comment('上映日');
             $table->foreignId('schedule_id')->constrained()->onDelete('cascade');
             $table->foreignId('sheet_id')->constrained()->onDelete('cascade');
             $table->unique(['schedule_id', 'sheet_id']);

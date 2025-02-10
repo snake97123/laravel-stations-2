@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('movie_title_column', function (Blueprint $table) {
-            $table->dropUnique('title');
+        Schema::table('movies', function (Blueprint $table) {
+            $table->dropUnique('movies_title_unique');
             $table->text('title')->change();
         });
     }

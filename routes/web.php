@@ -6,6 +6,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\AdminReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,3 +81,12 @@ Route::get('/admin/schedules/{scheduleId}/edit', [AdminScheduleController::class
 Route::patch('/admin/schedules/{id}/update', [AdminScheduleController::class, 'update'])->name('schedules.update');
 
 Route::delete('admin/schedules/{scheduleId}/destroy', [AdminScheduleController::class, 'delete'])->name('schedules.destroy');
+
+// Station19の内容
+Route::get('/admin/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
+Route::get('/admin/reservations/create', [AdminReservationController::class, 'create'])->name('reservations.create');
+Route::post('/admin/reservations/', [AdminReservationController::class, 'store'])->name('admin.reservations.store');
+Route::get('/admin/reservations/schedules/{movie_id}', [AdminReservationController::class, 'getSchedules']);
+Route::get('/admin/reservations/{id}/edit', [AdminReservationController::class, 'show'])->name('reservations.show');
+Route::patch('/admin/reservations/{id}/', [AdminReservationController::class, 'update'])->name('reservations.update');
+Route::delete('/admin/reservations/{id}', [AdminReservationController::class, 'delete'])->name('reservations.destroy');

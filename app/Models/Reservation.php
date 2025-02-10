@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\CarbonImmutable;
 
 class Reservation extends Model
 {
@@ -16,4 +17,14 @@ class Reservation extends Model
         'email',
         'name',
     ];
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
+
+    public function sheet()
+    {
+        return $this->belongsTo(Sheet::class);
+    }
 }
