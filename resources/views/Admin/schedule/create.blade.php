@@ -21,6 +21,13 @@
     
     <label for="end_time_time">終了時間</label>
     <input type="time" name="end_time_time" id="end_time_time" required>
+
+    <label for="screen_id">スクリーン</label>
+    <select name="screen_id" id="screen_id">
+      @foreach($screens as $screen)
+        <option value="{{ $screen->id }}">{{ $screen->name }}</option>
+      @endforeach
+    </select>
     <button type="submit">作成</button>
   </form>
 </body>

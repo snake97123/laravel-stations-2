@@ -13,7 +13,7 @@
       <h2>{{ $movie->title }}</h2>
       @if($movie->schedules->isNotEmpty())
         @foreach($movie->schedules as $schedule)
-          <a href="{{ route('schedules.show', ['id' => $schedule->id]) }}">
+          <a href="{{ route('admin.movies.show', ['id' => $schedule->id]) }}">
         {{ $schedule->start_time }} ~ {{ $schedule->end_time }}
           </a>
           <form method="POST" action="{{ route('schedules.destroy', ['id' => $schedule->id]) }}" onsubmit="return confirm('本当に削除しますか？')">

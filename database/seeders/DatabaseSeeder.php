@@ -9,6 +9,7 @@ use App\Models\Schedule;
 use Illuminate\Database\Seeder;
 
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $genres = Genre::factory(3)->create();
+        $this->call(ScreenSeeder::class);
 
         $genres->each(function ($genre) {
             $movies = Movie::factory(3)->create([

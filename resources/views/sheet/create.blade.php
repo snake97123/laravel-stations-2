@@ -12,19 +12,19 @@
         @csrf
         <div>
           <label>映画作品：</label>
-          <span>{{ $movie_id }}</span>
+          <span>{{ $movie->title }}</span>
           <input type="hidden" name="movie_id" value="{{ $movie_id }}">
         </div>
 
         <div>
           <label>上映スケジュール：</label>
-          <span>{{ $schedule_id }}</span>
+          <span>{{ $schedule->start_time->format('Y-m-d') }}~{{ $schedule->end_time->format('Y-m-d') }}</span>
           <input type="hidden" name="schedule_id" value="{{ $schedule_id }}">
         </div>
 
         <div>
           <label>座席：</label>
-          <span>{{ $sheetId }}</span>
+          <span>{{ $sheet->row }}{{ $sheet->column }}</span>
           <input type="hidden" name="sheet_id" value="{{ $sheetId }}">
         </div>
 

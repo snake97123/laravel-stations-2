@@ -22,7 +22,7 @@
   <ul>
   @foreach ($schedules as $schedule)
   <li>
-  <a href="{{ route('schedules.show', ['id' => $movie->id]) }}">{{ $schedule->start_time}} ~ {{ $schedule->end_time}}</a>
+  <a href="{{ route('admin.movies.show', ['id' => $movie->id]) }}">{{ $schedule->start_time}} ~ {{ $schedule->end_time}}</a>
   </li>
   @endforeach
   </ul>

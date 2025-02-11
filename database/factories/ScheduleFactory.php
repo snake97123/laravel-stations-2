@@ -16,11 +16,13 @@ class ScheduleFactory extends Factory
     public function definition()
     {
         $startTime = CarbonImmutable::parse($this->faker->dateTimeBetween('-1 week', '+1 week'));
-        $endTime = $startTime->addHours($this->faker->numberBetween(1, 4)); 
+        $endTime = $startTime->addHours($this->faker->numberBetween(1, 4));
+        $screenId = $this->faker->numberBetween(1, 3); 
 
         return [
             'start_time' => $startTime,
-            'end_time' => $endTime
+            'end_time' => $endTime,
+            'screen_id' => $screenId
         ];
     }
 }

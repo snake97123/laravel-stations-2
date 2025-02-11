@@ -119,7 +119,7 @@ class ScreenTest extends TestCase
 
     public function test同一スクリーンに対して_重複のある上映日時のスケジュールを作成する場合_バリデーションエラー(): void
     {
-        $this->post('/admin/movies/' . $this->movie->id . '/schedules/store', [
+      $this->post('/admin/movies/' . $this->movie->id . '/schedules/store', [
             'movie_id' => $this->movie->id,
             'screen_id' => $this->screen1->id,
             'start_time_date' => '2024-12-10',
@@ -128,7 +128,7 @@ class ScreenTest extends TestCase
             'end_time_time' => '12:00'
         ]);
 
-        $this->post('/admin/movies/' . $this->movie->id . '/schedules/store', [
+      $response = $this->post('/admin/movies/' . $this->movie->id . '/schedules/store', [
             'movie_id' => $this->movie->id,
             'screen_id' => $this->screen1->id,
             'start_time_date' => '2024-12-10',
@@ -181,7 +181,7 @@ class ScreenTest extends TestCase
         }
     }
 
-    public function reservationPatternProvider(): array
+    public static function reservationPatternProvider(): array
     {
         $users_data = [
             [

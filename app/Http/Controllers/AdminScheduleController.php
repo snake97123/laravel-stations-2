@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Movie;
+use App\Models\Screen;
 use Carbon\CarbonImmutable;
 
 class AdminScheduleController extends Controller
@@ -24,13 +25,28 @@ class AdminScheduleController extends Controller
     public function create($id)
     {
         $movie = Movie::find($id);
-        return view('admin.schedule.create', ['movie' => $movie]);
+        $screens = Screen::all();
+        return view('admin.schedule.create', ['movie' => $movie, 'screens' => $screens]);   
     }
 
     public function store(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'movie_id' => ['required', 'exists:movies,id'],
+            'screen_id' => ['required', 'exists:screens,id',
+            function($attribute, $value, $fail) {
+                $start_time = new CarbonImmutable(request()->input('start_time_date') . ' ' . request()->input('start_time_time'));
+                $end_time = new CarbonImmutable(request()->input('end_time_date') . ' ' . request()->input('end_time_time'));
+                $screen_id = request()->input('screen_id');
+                $duplicateData = Schedule::where('screen_id', $screen_id)
+                    ->where(function($query) use ($start_time, $end_time) {
+                        $query->whereBetween('start_time', [$start_time, $end_time])
+                            ->orWhereBetween('end_time', [$start_time, $end_time]);
+                    })
+                    ->exists();
+                if($duplicateData) {
+                    $fail('指定されたスクリーンはすでにその時間帯に予約されています');
+                }
+            }],
             'start_time_date' => ['required', 'date_format:Y-m-d', 'before_or_equal:end_time_date'],
             'start_time_time' => ['required', 'date_format:H:i', 'before:end_time_time',
             function ($attribute, $value, $fail) use ($request) {
@@ -50,18 +66,32 @@ class AdminScheduleController extends Controller
                 }
             }],
         ]);
+    
 
        
         $start_time = new CarbonImmutable($validatedData['start_time_date'] . ' ' . $validatedData['start_time_time']);
         $end_time = new CarbonImmutable($validatedData['end_time_date'] . ' ' . $validatedData['end_time_time']);
+        $screen_id = $validatedData['screen_id'];
+
+        // $duplicateData = Schedule::where('screen_id', $screen_id)
+        //     ->where(function($query) use ($start_time, $end_time) {
+        //         $query->whereBetween('start_time', [$start_time, $end_time])
+        //             ->orWhereBetween('end_time', [$start_time, $end_time]);
+        //     })
+        //     ->exists();
+        
+        // if($duplicateData) {
+        //     return redirect("/admin/movies/{$id}/schedules/create")->with('error', '指定されたスクリーンはすでにその時間帯に予約されています');
+        // }
 
         $schedule = new Schedule();
         $schedule->movie_id = $id;
         $schedule->start_time = $start_time;
         $schedule->end_time = $end_time;
+        $schedule->screen_id = $screen_id;
         $schedule->save();
 
-        return redirect()->route('schedules.show', ['id' => $id]);
+        return redirect()->route('admin.movies.show', ['id' => $id]);
     }
 
     public function edit($id)

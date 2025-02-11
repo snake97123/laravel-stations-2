@@ -76,7 +76,7 @@ Route::post('/reservations/store', [SheetController::class, 'store'])->name('res
 
 // Station15の内容
 Route::get('/admin/schedules', [AdminScheduleController::class, 'index'])->name('schedules.index');
-Route::get('/admin/schedules/{id}', [AdminScheduleController::class, 'show'])->name('schedules.show');
+Route::get('/admin/schedules/{id}', [AdminScheduleController::class, 'show'])->name('admin.movies.show');
 Route::get('/admin/schedules/{scheduleId}/edit', [AdminScheduleController::class, 'edit'])->name('schedules.edit');
 Route::patch('/admin/schedules/{id}/update', [AdminScheduleController::class, 'update'])->name('schedules.update');
 

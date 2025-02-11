@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Sheet;
 use App\Models\Reservation;
+use App\Models\Movie;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -51,9 +53,12 @@ class SheetController extends Controller
       abort(400);
     }
 
+    $movie = Movie::findOrFail($movie_id);
+    $schedule = Schedule::findOrFail($schedule_id);
+    $sheet = Sheet::findOrFail($sheetId);
     
 
-    return view('sheet.create', ['movie_id' => $movie_id, 'schedule_id' => $schedule_id, 'sheetId' => $sheetId, 'date' => $date]);
+    return view('sheet.create', ['movie_id' => $movie_id, 'schedule_id' => $schedule_id, 'sheetId' => $sheetId, 'date' => $date, 'movie' => $movie, 'schedule' => $schedule, 'sheet' => $sheet]);
   }
 
   public function store(Request $request)
@@ -71,6 +76,8 @@ class SheetController extends Controller
     $existReservation = Reservation::where('schedule_id', $request->schedule_id)
     ->where('sheet_id', $request->sheet_id)
     ->exists();
+
+    
 
     if($existReservation) {
       return redirect("/movies/{$request->movie_id}/schedules/{$request->schedule_id}/sheets?date={$date}")
